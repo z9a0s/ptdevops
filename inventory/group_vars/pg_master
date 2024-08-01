@@ -1,0 +1,3 @@
+db_password: P@ssw0rd
+replication_user: repl_user
+replica_password: P@ssw0rd

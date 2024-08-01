@@ -1,0 +1,123 @@
+2024-08-01 16:56:48,383 - [DEBUG] - token = 7200071964:AAEdhtkZsa0rID3C4FcY5eSyv6qb7FxdfBE
+2024-08-01 16:56:48,383 - [DEBUG] - chat_id = -4208602153
+2024-08-01 16:56:48,383 - [DEBUG] - sshHost = 192.168.100.253
+2024-08-01 16:56:48,383 - [DEBUG] - sshUsername = ptuser
+2024-08-01 16:56:48,384 - [DEBUG] - sshPassword = P@ssw0rd
+2024-08-01 16:56:48,384 - [DEBUG] - dbUsername = postgres
+2024-08-01 16:56:48,384 - [DEBUG] - dbPass = P@ssw0rd
+2024-08-01 16:56:48,384 - [DEBUG] - dbHost = 192.168.100.253
+2024-08-01 16:56:48,384 - [DEBUG] - dbPort = 5432
+2024-08-01 16:56:48,384 - [DEBUG] - dbDefaultName = postgres
+2024-08-01 16:56:48,384 - [DEBUG] - dbConnectName = db_ptdevops
+2024-08-01 16:56:48,384 - [INFO] - Variable values from the .ENV file are loaded.
+2024-08-01 16:56:48,385 - [DEBUG] - Setting singleton dispatcher as <telegram.ext.dispatcher.Dispatcher object at 0x7f81859dc380>
+2024-08-01 16:56:48,386 - [INFO] - Scheduler started
+2024-08-01 16:56:48,387 - [DEBUG] - Looking for jobs to run
+2024-08-01 16:56:48,387 - [DEBUG] - Entering: get_me
+2024-08-01 16:56:48,387 - [DEBUG] - No jobs; waiting until a job is added
+2024-08-01 16:56:48,685 - [DEBUG] - {'username': 'pt_devops_course_bot', 'can_join_groups': True, 'first_name': 'pt_devops_course_bot', 'can_read_all_group_messages': False, 'id': 7200071964, 'is_bot': True, 'supports_inline_queries': False}
+2024-08-01 16:56:48,685 - [DEBUG] - Exiting: get_me
+2024-08-01 16:56:48,685 - [DEBUG] - Bot:7200071964:dispatcher - started
+2024-08-01 16:56:48,687 - [DEBUG] - Bot:7200071964:updater - started
+2024-08-01 16:56:48,687 - [DEBUG] - Waiting for Dispatcher and polling to start
+2024-08-01 16:56:48,687 - [DEBUG] - Updater thread started (polling)
+2024-08-01 16:56:48,688 - [DEBUG] - Start network loop retry bootstrap del webhook
+2024-08-01 16:56:48,688 - [DEBUG] - Deleting webhook
+2024-08-01 16:56:48,688 - [DEBUG] - Entering: delete_webhook
+2024-08-01 16:56:48,689 - [DEBUG] - Dispatcher started
+2024-08-01 16:56:48,760 - [DEBUG] - True
+2024-08-01 16:56:48,760 - [DEBUG] - Exiting: delete_webhook
+2024-08-01 16:56:48,760 - [DEBUG] - Bootstrap done
+2024-08-01 16:56:48,760 - [DEBUG] - Start network loop retry getting Updates
+2024-08-01 16:56:48,760 - [DEBUG] - Entering: get_updates
+2024-08-01 16:56:49,992 - [DEBUG] - Getting updates: [98654813]
+2024-08-01 16:56:49,993 - [DEBUG] - [<telegram.update.Update object at 0x7f81859ee040>]
+2024-08-01 16:56:49,993 - [DEBUG] - Exiting: get_updates
+2024-08-01 16:56:49,993 - [DEBUG] - Entering: get_updates
+2024-08-01 16:56:49,993 - [DEBUG] - Processing Update: {'message': {'text': '/get_repl_logs', 'message_id': 1550, 'new_chat_photo': [], 'chat': {'username': 'konstantin_bolonin', 'last_name': 'Bolonin', 'id': 750630015, 'type': 'private', 'first_name': 'Konstantin'}, 'caption_entities': [], 'entities': [{'offset': 0, 'length': 14, 'type': 'bot_command'}], 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 'new_chat_members': [], 'date': 1722520609, 'delete_chat_photo': False, 'photo': [], 'from': {'username': 'konstantin_bolonin', 'first_name': 'Konstantin', 'last_name': 'Bolonin', 'id': 750630015, 'language_code': 'ru', 'is_bot': False}}, 'update_id': 98654813}
+2024-08-01 16:56:49,994 - [DEBUG] - selecting conversation (750630015, 750630015) with state None
+2024-08-01 16:56:49,994 - [DEBUG] - selecting conversation (750630015, 750630015) with state None
+2024-08-01 16:56:49,995 - [DEBUG] - selecting conversation (750630015, 750630015) with state None
+2024-08-01 16:56:49,995 - [DEBUG] - selecting conversation (750630015, 750630015) with state None
+2024-08-01 16:56:49,995 - [INFO] - Установка SSH подключения к удаленному серверу 192.168.100.253
+2024-08-01 16:56:49,996 - [DEBUG] - starting thread (client mode): 0x840d4160
+2024-08-01 16:56:49,996 - [DEBUG] - Local version/idstring: SSH-2.0-paramiko_3.4.0
+2024-08-01 16:56:50,011 - [DEBUG] - Remote version/idstring: SSH-2.0-OpenSSH_8.4p1 Debian-5+deb11u3
+2024-08-01 16:56:50,012 - [INFO] - Connected (version 2.0, client OpenSSH_8.4p1)
+2024-08-01 16:56:50,014 - [DEBUG] - === Key exchange possibilities ===
+2024-08-01 16:56:50,014 - [DEBUG] - kex algos: curve25519-sha256, curve25519-sha256@libssh.org, ecdh-sha2-nistp256, ecdh-sha2-nistp384, ecdh-sha2-nistp521, diffie-hellman-group-exchange-sha256, diffie-hellman-group16-sha512, diffie-hellman-group18-sha512, diffie-hellman-group14-sha256, kex-strict-s-v00@openssh.com
+2024-08-01 16:56:50,014 - [DEBUG] - server key: rsa-sha2-512, rsa-sha2-256, ssh-rsa, ecdsa-sha2-nistp256, ssh-ed25519
+2024-08-01 16:56:50,014 - [DEBUG] - client encrypt: chacha20-poly1305@openssh.com, aes128-ctr, aes192-ctr, aes256-ctr, aes128-gcm@openssh.com, aes256-gcm@openssh.com
+2024-08-01 16:56:50,015 - [DEBUG] - server encrypt: chacha20-poly1305@openssh.com, aes128-ctr, aes192-ctr, aes256-ctr, aes128-gcm@openssh.com, aes256-gcm@openssh.com
+2024-08-01 16:56:50,015 - [DEBUG] - client mac: umac-64-etm@openssh.com, umac-128-etm@openssh.com, hmac-sha2-256-etm@openssh.com, hmac-sha2-512-etm@openssh.com, hmac-sha1-etm@openssh.com, umac-64@openssh.com, umac-128@openssh.com, hmac-sha2-256, hmac-sha2-512, hmac-sha1
+2024-08-01 16:56:50,015 - [DEBUG] - server mac: umac-64-etm@openssh.com, umac-128-etm@openssh.com, hmac-sha2-256-etm@openssh.com, hmac-sha2-512-etm@openssh.com, hmac-sha1-etm@openssh.com, umac-64@openssh.com, umac-128@openssh.com, hmac-sha2-256, hmac-sha2-512, hmac-sha1
+2024-08-01 16:56:50,015 - [DEBUG] - client compress: none, zlib@openssh.com
+2024-08-01 16:56:50,015 - [DEBUG] - server compress: none, zlib@openssh.com
+2024-08-01 16:56:50,015 - [DEBUG] - client lang: <none>
+2024-08-01 16:56:50,015 - [DEBUG] - server lang: <none>
+2024-08-01 16:56:50,016 - [DEBUG] - kex follows: False
+2024-08-01 16:56:50,016 - [DEBUG] - === Key exchange agreements ===
+2024-08-01 16:56:50,016 - [DEBUG] - Strict kex mode: True
+2024-08-01 16:56:50,016 - [DEBUG] - Kex: curve25519-sha256@libssh.org
+2024-08-01 16:56:50,016 - [DEBUG] - HostKey: ssh-ed25519
+2024-08-01 16:56:50,016 - [DEBUG] - Cipher: aes128-ctr
+2024-08-01 16:56:50,016 - [DEBUG] - MAC: hmac-sha2-256
+2024-08-01 16:56:50,016 - [DEBUG] - Compression: none
+2024-08-01 16:56:50,016 - [DEBUG] - === End of kex handshake ===
+2024-08-01 16:56:50,025 - [DEBUG] - Resetting outbound seqno after NEWKEYS due to strict mode
+2024-08-01 16:56:50,025 - [DEBUG] - kex engine KexCurve25519 specified hash_algo <built-in function openssl_sha256>
+2024-08-01 16:56:50,025 - [DEBUG] - Switch to new keys ...
+2024-08-01 16:56:50,025 - [DEBUG] - Resetting inbound seqno after NEWKEYS due to strict mode
+2024-08-01 16:56:50,026 - [DEBUG] - Adding ssh-ed25519 host key for [192.168.100.253]:22: b'340c3a2ba226279881cd75524df236a8'
+2024-08-01 16:56:50,026 - [DEBUG] - Got EXT_INFO: {'server-sig-algs': b'ssh-ed25519,sk-ssh-ed25519@openssh.com,ssh-rsa,rsa-sha2-256,rsa-sha2-512,ssh-dss,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ecdsa-sha2-nistp256@openssh.com,webauthn-sk-ecdsa-sha2-nistp256@openssh.com'}
+2024-08-01 16:56:50,065 - [DEBUG] - userauth is OK
+2024-08-01 16:56:50,141 - [INFO] - Authentication (password) successful!
+2024-08-01 16:56:50,142 - [DEBUG] - [chan 0] Max packet in: 32768 bytes
+2024-08-01 16:56:50,164 - [DEBUG] - Received global request "hostkeys-00@openssh.com"
+2024-08-01 16:56:50,164 - [DEBUG] - Rejecting "hostkeys-00@openssh.com" global request from server.
+2024-08-01 16:56:50,205 - [DEBUG] - [chan 0] Max packet out: 32768 bytes
+2024-08-01 16:56:50,205 - [DEBUG] - Secsh channel 0 opened.
+2024-08-01 16:56:50,207 - [DEBUG] - [chan 0] Sesch channel 0 request ok
+2024-08-01 16:56:50,236 - [DEBUG] - [chan 0] EOF received (0)
+2024-08-01 16:56:50,237 - [INFO] - Полученный результат: 2024-08-01 16:35:56.807 MSK [464166] postgres@postgres STATEMENT:  CREATE USER repl_user WITH REPLICATION ENCRYPTED PASSWORD 'P@ssw0rd';
+
+2024-08-01 16:56:50,237 - [DEBUG] - [chan 0] EOF sent (0)
+2024-08-01 16:56:50,237 - [DEBUG] - Dropping user packet because connection is dead.
+2024-08-01 16:56:50,237 - [DEBUG] - Replication logs:
+2024-08-01 16:35:56.807 MSK [464166] postgres@postgres STATEMENT:  CREATE USER repl_user WITH REPLICATION ENCRYPTED PASSWORD 'P@ssw0rd';
+
+2024-08-01 16:56:50,237 - [DEBUG] - Entering: send_message
+2024-08-01 16:56:50,497 - [DEBUG] - {'text': "Replication logs:\n2024-08-01 16:35:56.807 MSK [464166] postgres@postgres STATEMENT:  CREATE USER repl_user WITH REPLICATION ENCRYPTED PASSWORD 'P@ssw0rd';", 'message_id': 1551, 'new_chat_photo': [], 'chat': {'username': 'konstantin_bolonin', 'last_name': 'Bolonin', 'id': 750630015, 'type': 'private', 'first_name': 'Konstantin'}, 'caption_entities': [], 'entities': [], 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 'new_chat_members': [], 'date': 1722520610, 'delete_chat_photo': False, 'photo': [], 'from': {'username': 'pt_devops_course_bot', 'first_name': 'pt_devops_course_bot', 'id': 7200071964, 'is_bot': True}}
+2024-08-01 16:56:50,498 - [DEBUG] - Exiting: send_message
+2024-08-01 16:56:50,498 - [DEBUG] - textBlock = Replication logs:
+2024-08-01 16:35:56.807 MSK [464166] postgres@postgres STATEMENT:  CREATE USER repl_user WITH REPLICATION ENCRYPTED PASSWORD 'P@ssw0rd';
+
+2024-08-01 16:56:55,709 - [INFO] - Received signal 2 (SIGINT), stopping...
+2024-08-01 16:56:55,710 - [INFO] - Scheduler has been shut down
+2024-08-01 16:56:55,710 - [DEBUG] - Looking for jobs to run
+2024-08-01 16:56:55,710 - [DEBUG] - No jobs; waiting until a job is added
+2024-08-01 16:56:55,710 - [DEBUG] - Stopping Updater and Dispatcher...
+2024-08-01 16:56:55,711 - [DEBUG] - Requesting Dispatcher to stop...
+2024-08-01 16:56:56,499 - [DEBUG] - orderly stopping
+2024-08-01 16:56:56,499 - [DEBUG] - Dispatcher thread stopped
+2024-08-01 16:56:56,499 - [DEBUG] - Bot:7200071964:dispatcher - ended
+2024-08-01 16:56:56,513 - [DEBUG] - Waiting for async thread 1/4 to end
+2024-08-01 16:56:56,513 - [DEBUG] - Closing run_async thread Bot:7200071964:worker:0d268427-d726-443c-adb9-1cec05317819_0/4
+2024-08-01 16:56:56,513 - [DEBUG] - Closing run_async thread Bot:7200071964:worker:0d268427-d726-443c-adb9-1cec05317819_2/4
+2024-08-01 16:56:56,513 - [DEBUG] - async thread 1/4 has ended
+2024-08-01 16:56:56,514 - [DEBUG] - Waiting for async thread 2/4 to end
+2024-08-01 16:56:56,513 - [DEBUG] - Closing run_async thread Bot:7200071964:worker:0d268427-d726-443c-adb9-1cec05317819_1/4
+2024-08-01 16:56:56,514 - [DEBUG] - async thread 2/4 has ended
+2024-08-01 16:56:56,513 - [DEBUG] - Closing run_async thread Bot:7200071964:worker:0d268427-d726-443c-adb9-1cec05317819_3/4
+2024-08-01 16:56:56,514 - [DEBUG] - Waiting for async thread 3/4 to end
+2024-08-01 16:56:56,514 - [DEBUG] - async thread 3/4 has ended
+2024-08-01 16:56:56,514 - [DEBUG] - Waiting for async thread 4/4 to end
+2024-08-01 16:56:56,514 - [DEBUG] - async thread 4/4 has ended
+2024-08-01 16:56:56,514 - [DEBUG] - Waiting for Bot:7200071964:dispatcher thread to end
+2024-08-01 16:56:56,514 - [DEBUG] - Bot:7200071964:dispatcher thread has ended
+2024-08-01 16:56:56,514 - [DEBUG] - Waiting for Bot:7200071964:updater thread to end
+2024-08-01 16:57:00,069 - [DEBUG] - No new updates found.
+2024-08-01 16:57:00,069 - [DEBUG] - []
+2024-08-01 16:57:00,069 - [DEBUG] - Exiting: get_updates
+2024-08-01 16:57:00,069 - [DEBUG] - Bot:7200071964:updater - ended
+2024-08-01 16:57:00,069 - [DEBUG] - Bot:7200071964:updater thread has ended

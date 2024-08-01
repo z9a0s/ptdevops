@@ -1,0 +1,182 @@
+- name: PostgreSQL Install
+  hosts: pg_host
+  become: yes
+  gather_facts: yes
+  tasks:
+  
+    - name: Install PG
+      apt:
+        name:
+           - postgresql
+           - postgresql-contrib
+           - rsync
+        state: present
+  
+    - name: PostgreSQL start
+      systemd: 
+        name: postgresql
+        state: started
+        enabled: yes
+
+    - name: Postgres user password set
+      shell: sudo -u postgres psql -c "ALTER USER postgres WITH password '{{ db_password }}'"
+
+- name: PostgreSQL Master Node Settings
+  hosts: pg_master
+  become: yes
+  gather_facts: yes
+  tasks:
+  
+   - name: Create archive directory
+     file:
+      path: /opt/archives
+      mode: 0700
+      owner: postgres
+      group: postgres
+      state: directory
+  
+   - name: Change postgresql.conf
+     lineinfile:
+       path: /etc/postgresql/13/main/postgresql.conf
+       regexp: "{{ item.regexp }}"
+       line: "{{ item.line }}"
+     with_items:
+       - { regexp: "#listen_addresses = 'localhost'", line: "listen_addresses = '*'"}
+       - { regexp: '#wal_level = replica', line: 'wal_level = replica' }
+       - { regexp: '#archive_mode = off', line: 'archive_mode = on' }
+       - { regexp: '#archive_command = ''', line: archive_command = 'rsync -a %p /opt/archives/%f'}
+       - { regexp: '#max_wal_senders = 10', line: 'max_wal_senders = 5' }
+       - { regexp: '#wal_log_hints = off', line: 'wal_log_hints = on' }
+       - { regexp: '#log_replication_commands = off', line: 'log_replication_commands = on'}
+       - { regexp: "#log_destination = 'stderr", line: "log_destination = 'stderr'"}
+       - { regexp: "#logging_collector = off", line: "logging_collector = on"}
+       - { regexp: "#log_directory = 'log'", line: "log_directory = 'log'"}
+       - { regexp: "#log_statement = 'none'", line: "#log_statement = 'all'"}
+#       - { regexp: '#hot_standby_feedback = off', line: 'hot_standby_feedback = on' } 
+  
+   - name: Change pg_hba.conf
+     blockinfile:
+       path: /etc/postgresql/13/main/pg_hba.conf
+       insertafter: 'host    replication     all             ::1/128                 md5'
+       block: |
+         host replication {{replication_user}} {{ hostvars['host01'].ansible_host }}/32 md5
+         host replication {{replication_user}} {{ hostvars['host02'].ansible_host }}/32 md5
+         host  all all 0.0.0.0/0 md5
+     
+   - name: Restart PostgreSQL server
+     systemd:
+        name: postgresql
+        enabled: yes
+        state: restarted
+
+   - name:  Create replication user
+     shell: sudo -u postgres psql -c "CREATE USER {{replication_user}} WITH REPLICATION ENCRYPTED PASSWORD '{{ replica_password }}';"
+
+   - name:  Create replication slot
+     shell: sudo -u postgres psql -c "SELECT pg_create_physical_replication_slot('replication_slot');"
+
+   - name:  Create database
+     shell: sudo -u postgres psql -c "CREATE database db_ptdevops OWNER postgres;"
+
+   - name:  Create table Phone_Numbers
+     shell: sudo -u postgres psql -d db_ptdevops -c "CREATE TABLE IF NOT EXISTS Phone_Numbers( ID SERIAL PRIMARY KEY, Number VARCHAR (100) NOT NULL);"
+
+   - name:  Create table Email_Addresses
+     shell: sudo -u postgres psql -d db_ptdevops -c "CREATE TABLE IF NOT EXISTS Email_Addresses( ID SERIAL PRIMARY KEY, email VARCHAR (100) NOT NULL);"
+
+- name: PostgreSQL Slave Node Settings
+  hosts: pg_replica
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Stop PostgreSQL server
+    systemd:
+      name: postgresql
+      state: stopped
+  
+  - name: Remove files form folder 
+    shell: rm -rf /var/lib/postgresql/13/data/*
+  
+  - name: PG init
+    shell: su - postgres -c "/usr/lib/postgresql/13/bin/initdb -D /var/lib/postgresql/13/data/"
+ 
+  - name: Remove files form folder 
+    shell: rm -rf /var/lib/postgresql/13/data/*
+
+  - name: Backup initial data from master
+    shell: su - postgres -c "PGPASSWORD={{ replica_password }} pg_basebackup -D  /var/lib/postgresql/13/data/ -h {{ hostvars['host01'].ansible_default_ipv4.address }} -p 5432 -U {{replication_user}} -Xs -R -P"
+
+
+  - name: Create signal file
+    file:
+      path: /var/lib/postgresql/13/data/standby.signal
+      state: touch  
+
+  - name: Update postgresql.conf
+    lineinfile:
+      path: /etc/postgresql/13/main/postgresql.conf
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+    with_items:
+      - { regexp: "#listen_addresses = 'localhost'", line: "listen_addresses = '*'"}
+      - { regexp: '#wal_level = replica', line: 'wal_level = replica' }
+      - { regexp: '#hot_standby = on', line: 'hot_standby = on' }
+      - { regexp: "#restore_command = ''", line: "restore_command = 'rsync -a  postgres@{{ hostvars['host01'].ansible_host }}:/opt/archives/%f %p'" }
+      - { regexp: "#recovery_target_timeline = 'latest'", line: "recovery_target_timeline = 'latest'" }
+ 
+  - name: Update pg_hba.conf
+    blockinfile:
+      path: /etc/postgresql/13/main/pg_hba.conf
+      insertafter: '#host replication postgres ::1/128 ident'
+      block: |
+        # Localhost
+        host replication replica 127.0.0.1/32 trust
+        # PostgreSQL Master IP address
+        host replication {{replication_user}} {{ ansible_default_ipv4.address}}/32 trust
+        # PostgreSQL Slave IP address
+        host replication {{replication_user}} {{ hostvars['host01'].ansible_default_ipv4.address }}/32 md5
+        #Connect PgAdmin
+        host  all all 0.0.0.0/0 md5
+  
+  - name: Start PostgreSQL server
+    systemd: 
+     name: postgresql
+     enabled: yes
+     state: started
+
+- name: Running tg_bot.py
+  hosts: tg_bot
+  become: yes
+  gather_facts: no
+
+  tasks:
+   - name: copy requrinments.txt
+     copy:
+       src: ./files/tg_bot/requirements.txt
+       dest: "/home/ansible/"
+       owner: ansible
+       group: ansible
+       mode: '770'
+
+   - name: copy python files
+     copy:
+       src: ./files/tg_bot/tg_bot.py
+       dest: "/home/ansible/bot/"
+       owner: ansible
+       group: ansible
+       mode: '777'
+       
+   - name: Install requrinments.txt
+     shell: pip3 install -r /home/ansible/requirements.txt
+   
+   - name: copy env files
+     copy:
+       src: ./files/tg_bot/.env
+       dest: "/home/ansible/bot/"
+       owner: ansible
+       group: ansible
+       mode: '777'    
+
+   - name: running script
+     shell: python3 /home/ansible/bot/tg_bot.py &
