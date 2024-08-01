@@ -4,9 +4,12 @@
    Создать пользователя ansible и выдать ему права на sudo NOPASSWD
 
 Клонировать репозиторий:
+```
 git clone
-1) Cоздать в каталоге ./files/tg_bot файл .env:
-    SSH_HOST = '<ip-адрес>' -- хост, где будет база Msster
+```
+1) Cоздать в каталоге ./files/tg_bot файл .env
+```
+   SSH_HOST = '<ip-адрес>' -- хост, где будет база Msster
     SSH_PORT = '<ssh-порт>'              -- ssh порт
     SSH_USER = '<имя пользователя>'      -- username с правами sudo NOPASSWD (<username>  ALL=(ALL:ALL) NOPASSWD:ALL)
     SSH_PASSWORD = '<пароль>'
@@ -18,5 +21,8 @@ git clone
     DB_PORT = '5432'                     -- не менять
     DB_DEFAULT_NAME = 'postgres'         -- не менять
     DB_CONNECT_NAME = 'db_ptdevops'      -- не менять
-2) Выполнить запуск инсталляции проекта:
+```
+3) Выполнить запуск инсталляции проекта:
+```
 ansible-playbook -i ./inventory/hosts tg_bot_playbook.yaml
+```
