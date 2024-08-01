@@ -1,0 +1,71 @@
+services:
+  ptdevops-tgbot:
+    container_name: "ptdevops-tgbot"
+    build: ./bot_image/
+    volumes:
+      - ./config/.env:/bot/.env
+    restart: unless-stopped
+  
+  ptdevops-store-main:
+    container_name: "ptdevops-store-main"
+    build: ./db_image/
+    user: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: db_ptdevops
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256\nhost replication all 0.0.0.0/0 md5"
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+      PGDATA: "/var/lib/postgresql/data/pgdata_main"
+    command: |
+      postgres 
+      -c wal_level=replica 
+      -c hot_standby=on 
+      -c max_wal_senders=10 
+      -c max_replication_slots=10 
+      -c hot_standby_feedback=on 
+      -c log_replication_commands=on 
+      -c log_statement=all 
+      -c wal_log_hints=on 
+    volumes:
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata_main:/var/lib/postgresql/data
+    healthcheck:
+      test: 'pg_isready -U postgres --dbname=db_ptdevops'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ptdevops-store-repl:
+    container_name: "ptdevops-store-repl"
+    build: ./db_repl_image/
+    user: postgres
+    restart: always
+    ports:
+      - 6432:5432
+    environment:  
+      PGUSER: replicator
+      PGPASSWORD: replicator_password
+      PGDATA: "/var/lib/postgresql/data/pgdata_repl"
+    command: |
+      bash -c "
+      until pg_basebackup --pgdata=/var/lib/postgresql/data/pgdata_repl -R --slot=replication_slot --host=ptdevops-store-main --port=5432
+      do
+      echo 'Waiting for primary to connect...'
+      sleep 1s
+      done
+      echo 'Backup done, starting replica...'
+      chmod 0700 /var/lib/postgresql/data
+      postgres
+      "
+    volumes:
+      - pgdata_repl:/var/lib/postgresql/data
+    depends_on:
+      - ptdevops-store-main
+
+volumes:
+  pgdata_main:
+  pgdata_repl:
